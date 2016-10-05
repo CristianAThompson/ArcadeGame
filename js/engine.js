@@ -93,6 +93,7 @@ var Engine = (function(global) {
         //check each enemy position against player position for collision
         allEnemies.forEach(function(enemy) {
             if (xBetween(enemy.x,player.x-60,player.x+60) && xBetween(enemy.y,player.y-60,player.y+60)) {
+
                 window.cancelAnimationFrame(rAfId);
                 if (window.confirm('Oh no, you got squished! Wanna play again?')) {
                     reset();
