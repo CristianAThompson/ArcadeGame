@@ -19,9 +19,7 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
+    var canvas = document.getElementById("canvas"),
         ctx = canvas.getContext('2d'),
         lastTime,
         collisionOccurred = false,
@@ -30,7 +28,7 @@ var Engine = (function(global) {
     canvas.width = 505;
     canvas.height = 606;
 
-    doc.body.appendChild(canvas);
+    // doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -51,7 +49,7 @@ var Engine = (function(global) {
         update(dt);
 
         if (collisionOccurred) {
-            win.cancelAnimationFrame(rAfId);
+            window.cancelAnimationFrame(rAfId);
             return;
         }
         render();
@@ -64,7 +62,7 @@ var Engine = (function(global) {
         /* Use the browser's requestAnimationFrame function to call this
          * function again as soon as the browser is able to draw another frame.
          */
-        win.requestAnimationFrame(main);
+        window.requestAnimationFrame(main);
     }
 
     /* This function does some initial setup that should only occur once,
@@ -94,15 +92,15 @@ var Engine = (function(global) {
     function checkCollisions() {
         //check each enemy position against player position for collision
         allEnemies.forEach(function(enemy) {
-            if (xBetween(enemy.x,player.x-20,player.x+40) && xBetween(enemy.y,player.y-20,player.y+40)) {
-                win.cancelAnimationFrame(rAfId);
-                if (win.confirm('Oh no, you got squished! Wanna play again?')) {
+            if (xBetween(enemy.x,player.x-60,player.x+60) && xBetween(enemy.y,player.y-60,player.y+60)) {
+                window.cancelAnimationFrame(rAfId);
+                if (window.confirm('Oh no, you got squished! Wanna play again?')) {
                     reset();
                 }
             }
             if (player.y === 12) {
-                win.cancelAnimationFrame(rAfId);
-                if (win.confirm("Congratulations you made it! Play again!")) {
+                window.cancelAnimationFrame(rAfId);
+                if (window.confirm("Congratulations you made it! Play again!")) {
                     reset();
                 }
 
@@ -199,8 +197,6 @@ var Engine = (function(global) {
         allEnemies = [];
         index = allEnemies.length;
         allEnemies.push(new Enemy(-200,60));
-        allEnemies.push(new Enemy(-400,230));
-        
     }
 
     /* Go ahead and load all of the images we know we're going to need to

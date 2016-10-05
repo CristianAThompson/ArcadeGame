@@ -17,28 +17,31 @@ var Enemy = function(x, y) {
     //defines the outline for each Enemy entity
     baseObj.call(this, x, y, "images/enemy-bug.png");
     this.constructor = Enemy;
+    var rS = getRandomInt(1,4);
     //sets the speed modifer for enemies at random between 1 and 4
-    this.speedMod = getRandomInt(3,5);
+    this.speedMod = getRandomInt(1, rS);
     //creates timestamp for enemy function
     var ts = Math.round((new Date()).getTime() /1000);
     //add a random number of seconds to current time to spawn new enemy
-    this.friend = ts + getRandomInt(1, 4);
+    this.friend = ts + getRandomInt(1, 1.25);
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     //this moves the enemy across the screen
-    this.x = this.x + (30 * dt) + this.speedMod;
+    this.x = this.x + (60 * dt) + this.speedMod;
     //creates timestamp for update function
-    var ts = Math.round((new Date()).getTime() /1000);
+    var ts = Math.round((new Date()).getTime() / 1000);
     //specifies index length of all enemies array
     var index = allEnemies.length;
     if(this.friend === ts) {
         //create random y for enemy valid rows
         var rY = getRandomInt(0,3);
+        //create random time for rX
+        var rT = getRandomInt(-30, -100);
         //create a random x for enemy
-        var rX = getRandomInt(1,2) * -35;
+        var rX = getRandomInt(1,2) * rT;
         //add the enemy we create to the empty allEnemies array
         allEnemies.push(new Enemy(rX, validRows[rY]));
         //remove the timeStamp from friend so the enemy won't spawn more friends
@@ -60,7 +63,7 @@ var Player = function() {
     //specifies the default value to be used later for movement math
     this.moveX = 0;
     this.moveY = 0;
-    //the speed to be used to for player movement 
+    //the speed to be used to for player movement
     this.speed = 4;
 
 
@@ -87,7 +90,7 @@ Player.prototype.handleInput = function(key) {
         return;
     }
     if(this.y<53 && key === 'up') {
-        return ;
+        return;
     }
     if(this.y>350 && key === 'down') {
         return;
@@ -128,7 +131,41 @@ Player.prototype.update = function(dt) {
     }
 };
 
+var moveLeft = function() {
+  if (player.x > 2) {
+    player.moveX -= 100;
+  }
+};
 
+var moveRight = function() {
+  if (player.x < 400) {
+    player.moveX += 100;
+  }
+};
+
+var moveUp = function() {
+  if (player.y > 53) {
+    player.moveY -= 84;
+  }
+};
+
+var moveDown = function() {
+  if (player.y < 350) {
+    player.moveY += 84;
+  }
+};
+
+var leftButton = document.getElementById('left');
+leftButton.onclick = moveLeft;
+
+var rightButton = document.getElementById('right');
+rightButton.onclick = moveRight;
+
+var upButton = document.getElementById('up');
+upButton.onclick = moveUp;
+
+var downButton = document.getElementById('down');
+downButton.onclick = moveDown;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
