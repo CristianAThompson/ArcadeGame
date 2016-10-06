@@ -25,8 +25,8 @@ var Engine = (function(global) {
         collisionOccurred = false,
         rAfId;
 
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 606;
+    canvas.height = 499;
 
     // doc.body.appendChild(canvas);
 
@@ -99,7 +99,7 @@ var Engine = (function(global) {
                     reset();
                 }
             }
-            if (player.y === 12) {
+            if (player.x === 500) {
                 window.cancelAnimationFrame(rAfId);
                 if (window.confirm("Congratulations you made it! Play again!")) {
                     reset();
@@ -145,12 +145,12 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
+                'images/grass-block.png',   // Top row is water
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/stone-block.png',   // Row 1 of 2 of grass
+                'images/water-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
             numCols = 5,
@@ -169,7 +169,7 @@ var Engine = (function(global) {
                  * so that we get the benefits of caching these images, since
                  * we're using them over and over.
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), row * 101, col * 82);
             }
         }
 
@@ -197,7 +197,7 @@ var Engine = (function(global) {
         player = new Player();
         allEnemies = [];
         index = allEnemies.length;
-        allEnemies.push(new Enemy(-200,60));
+        allEnemies.push(new Enemy(101,-20));
     }
 
     /* Go ahead and load all of the images we know we're going to need to

@@ -23,27 +23,27 @@ var Enemy = function(x, y) {
     //creates timestamp for enemy function
     var ts = Math.round((new Date()).getTime() /1000);
     //add a random number of seconds to current time to spawn new enemy
-    this.friend = ts + getRandomInt(1, 1.25);
+    this.friend = ts + getRandomInt(1, 1.5);
 };
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     //this moves the enemy across the screen
-    this.x = this.x + (60 * dt) + this.speedMod;
+    this.y = this.y + (60 * dt) + this.speedMod;
     //creates timestamp for update function
     var ts = Math.round((new Date()).getTime() / 1000);
     //specifies index length of all enemies array
     var index = allEnemies.length;
     if(this.friend === ts) {
         //create random y for enemy valid rows
-        var rY = getRandomInt(0,3);
+        var rY = getRandomInt(0,4);
         //create random time for rX
-        var rT = getRandomInt(-30, -100);
+        var rT = getRandomInt(50, 100);
         //create a random x for enemy
-        var rX = getRandomInt(1,2) * rT;
+        var rX = getRandomInt(1,2) * rY;
         //add the enemy we create to the empty allEnemies array
-        allEnemies.push(new Enemy(rX, validRows[rY]));
+        allEnemies.push(new Enemy(validRows[rY], rX));
         //remove the timeStamp from friend so the enemy won't spawn more friends
         this.friend = 0;
     }
@@ -58,13 +58,13 @@ Enemy.prototype.render = function() {
 // defines the player initial location and sprite calls the constructor.
 
 var Player = function() {
-    baseObj.call(this, 202, 408, 'images/char-boy.png');
+    baseObj.call(this, 0, 154, 'images/char-boy.png');
     this.constructor = Player;
     //specifies the default value to be used later for movement math
     this.moveX = 0;
     this.moveY = 0;
     //the speed to be used to for player movement
-    this.speed = 4;
+    this.speed = 2;
 
 
 };
@@ -83,25 +83,25 @@ Player.prototype.handleInput = function(key) {
     }
 
     // check the boundry, dont let player go off screen.
-    if(this.x>304 && key === 'right') {
+    if(this.x>404 && key === 'right') {
         return;
     }
     if(this.x<4 && key === 'left') {
         return;
     }
-    if(this.y<53 && key === 'up') {
+    if(this.y<-10 && key === 'up') {
         return;
     }
-    if(this.y>350 && key === 'down') {
+    if(this.y>303 && key === 'down') {
         return;
     }
 
     // set player movement vars movement up and down 84px, left and right 100px
     if(key === 'up') {
-        this.moveY -= 84;
+        this.moveY -= 82;
     }
     if(key === 'down') {
-        this.moveY += 84;
+        this.moveY += 82;
     }
     if(key === 'left') {
         this.moveX -= 100;
@@ -144,14 +144,14 @@ var moveRight = function() {
 };
 
 var moveUp = function() {
-  if (player.y > 53) {
-    player.moveY -= 84;
+  if (player.y > -10) {
+    player.moveY -= 82;
   }
 };
 
 var moveDown = function() {
-  if (player.y < 350) {
-    player.moveY += 84;
+  if (player.y < 303) {
+    player.moveY += 82;
   }
 };
 
@@ -183,6 +183,6 @@ document.addEventListener('keyup', function(e) {
 var player = new Player();
 
 var allEnemies = [];
-var validRows = [60,145,230];
+var validRows = [101,202,303,404];
 
-allEnemies.push(new Enemy(-100, validRows[0]));
+allEnemies.push(new Enemy(validRows[0], -20));
