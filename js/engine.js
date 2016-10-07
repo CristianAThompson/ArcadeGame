@@ -99,14 +99,14 @@ var Engine = (function(global) {
                     reset();
                 }
             }
-            if (player.x === 465) {
-                window.cancelAnimationFrame(rAfId);
-                if (window.confirm("Congratulations you made it! Play again!")) {
-                    reset();
-                }
-
-            }
         });
+        if (player.x >= 490) {
+            window.cancelAnimationFrame(rAfId);
+            if (window.confirm("Congratulations you made it! Play again!")) {
+                reset();
+            }
+
+        }
     }
 
     /*Compares the value x between a and b to return true or false */
@@ -184,9 +184,9 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
-            enemy.render();
-        });
+         allEnemies.forEach(function(enemy) {
+             enemy.render();
+         });
 
         player.render();
     }

@@ -58,13 +58,13 @@ Enemy.prototype.render = function() {
 // defines the player initial location and sprite calls the constructor.
 
 var Player = function() {
-    baseObj.call(this, 0, 154, 'images/char-boy.png');
+    baseObj.call(this, 0, 315, 'images/char-boy.png');
     this.constructor = Player;
     //specifies the default value to be used later for movement math
     this.moveX = 0;
     this.moveY = 0;
     //the speed to be used to for player movement
-    this.speed = 3;
+    this.speed = 4;
 
 
 };
@@ -77,10 +77,10 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(key) {
-    // wait until the move variable is false before next move is allowed to begin
-    if(this.moveX !== 0 || this.moveY !== 0) {
-        return;
-    }
+    // // wait until the move variable is false before next move is allowed to begin
+    // if(this.moveX !== 0 || this.moveY !== 0) {
+    //     return;
+    // }
 
     // check the boundry, dont let player go off screen.
     if(this.x>404 && key === 'right') {
@@ -89,7 +89,7 @@ Player.prototype.handleInput = function(key) {
     if(this.x<4 && key === 'left') {
         return;
     }
-    if(this.y<-10 && key === 'up') {
+    if(this.y<-4 && key === 'up') {
         return;
     }
     if(this.y>303 && key === 'down') {
@@ -98,10 +98,13 @@ Player.prototype.handleInput = function(key) {
 
     // set player movement vars movement up and down 84px, left and right 100px
     if(key === 'up') {
-        this.moveY -= 82;
+        this.moveY -= 80;
+        setTimeout(function() {
+          player.moveY += 80;
+        }, 400);
     }
     if(key === 'down') {
-        this.moveY += 82;
+        this.moveY += 80;
     }
     if(key === 'left') {
         this.moveX -= 100;
@@ -129,6 +132,19 @@ Player.prototype.update = function(dt) {
         this.y -= this.speed;
         this.moveY += this.speed;
     }
+
+    if(player.x>491) {
+        player.x = 490;
+    }
+    if(player.x<4) {
+        player.x = 3;
+    }
+    if(player.y<-4) {
+        player.y = -3;
+    }
+    if(player.y>303) {
+        player.y = 302;
+    }
 };
 
 var moveLeft = function() {
@@ -144,14 +160,17 @@ var moveRight = function() {
 };
 
 var moveUp = function() {
-  if (player.y > -10) {
-    player.moveY -= 82;
+  if (player.y > -4) {
+    player.moveY -= 80;
+    setTimeout(function() {
+      player.moveY += 80;
+    }, 400);
   }
 };
 
 var moveDown = function() {
   if (player.y < 303) {
-    player.moveY += 82;
+    player.moveY += 80;
   }
 };
 
