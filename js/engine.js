@@ -99,7 +99,7 @@ var Engine = (function(global) {
                     reset();
                 }
             }
-            if (player.x === 420) {
+            if (player.x === 465) {
                 window.cancelAnimationFrame(rAfId);
                 if (window.confirm("Congratulations you made it! Play again!")) {
                     reset();
