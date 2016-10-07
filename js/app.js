@@ -64,7 +64,7 @@ var Player = function() {
     this.moveX = 0;
     this.moveY = 0;
     //the speed to be used to for player movement
-    this.speed = 2;
+    this.speed = 3;
 
 
 };
@@ -138,7 +138,7 @@ var moveLeft = function() {
 };
 
 var moveRight = function() {
-  if (player.x < 400) {
+  if (player.x < 404) {
     player.moveX += 100;
   }
 };
